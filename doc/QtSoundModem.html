@@ -1,0 +1,104 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/sgml;charset=utf-8" >
+
+<style type="text/css">
+
+body {background: white;color: black}
+
+h1 {color: #c33;background: none;font-weight: bold;text-align: center}
+h2 {color: #00008b;background: none;font-weight: bold}
+h3 {color: #006400;background: none;margin-left: 3%;margin-right: 3%;font-weight: bold}
+h4 {margin-left: 5%;margin-right: 5%;font-weight: bold}
+h5 {margin-left: 6%;margin-right: 6%;font-weight: bold}
+div {margin-left: 10%;margin-right: 10%;}
+ul, ol, dl, p {margin-left: 6%;margin-right: 6%}
+pre {margin-left: 10%;white-space: pre}
+
+</style>
+ <title>Qt Port of UZ7HO's SoundModem</title>
+</head>
+
+
+<h1>QtSoundModem</h1>
+<h2>Introduction</h2>
+<p>
+QtSoundModem (QtSM) is a multi-platform port of <a href="http://uz7.ho.ua/packetradio.htm">UZ7HO's SoundModem</a>. Many thanks to Andy for allowing me to convert his excellent software. 
+There are versions for Windows and Linux. If you are not familiar with SoundModem I suggest you look at the User Guide on Andrei's site before trying to use this program. I've only documented differences from the original program.
+<br><br>
+<font size="3" color="red">This is Beta Software - don't be suprised if it doesn't perform perfectly</font>
+
+<br>
+
+<h2>Installation</h2>
+<p>
+The program can be download from:
+<br><br>
+
+<a href=http://www.cantab.net/users/john.wiseman/Downloads/Beta/QtSoundModem>http://www.cantab.net/users/john.wiseman/Downloads/Beta/QtSoundModem</a> &nbsp; Binary for x86 Linux systems<br>
+
+<a href=http://www.cantab.net/users/john.wiseman/Downloads/Beta/piQtSoundModem>http://www.cantab.net/users/john.wiseman/Downloads/Beta/piQtSoundModem</a> &nbsp; Binary for Raspberry Pi<br>
+
+<a href=http://www.cantab.net/users/john.wiseman/Downloads/Beta/QtSoundModem.zip>http://www.cantab.net/users/john.wiseman/Downloads/Beta/QtSoundModem.zip </a> &nbsp; Program and Qt runtime for Windows.<br>
+
+
+<br>
+The program uses the <a href=https://www.qt.io/qt-framework>Qt Framework,</a> so needs some runtime files.   
+<br><br>
+The Windows .zip file contains all the needed Qt Files, so you just need to unzip to an appropriate place. It is possible on some older versions of Windows that you may need some compiler runtime files, eg MSVCP140.dll. If you get a message about these being missing when you run the program download and run either <br>
+<a href=https://aka.ms/vs/16/release/vc_redist.x86.exe>https://aka.ms/vs/16/release/vc_redist.x86.exe</a> or <br> 
+<a href=https://aka.ms/vs/16/release/vc_redist.x64.exe>https://aka.ms/vs/16/release/vc_redist.x64.exe</a> 
+
+<br><br>
+On Linux you may need to install the Qt5 package if you don't already have any other Qt5 programs on your machine:
+<pre>
+sudo apt-get install qt5-default
+sudo apt-get install libqt5serialport5
+</pre><p>
+
+If you need to run on other Linux or similar systems you may be able to compile from source. First you need to install Qt Serial Port support, which isn't part of the standard Qt installation, the pulseaudio headers and an fft library:
+<pre>sudo apt-get install libqt5serialport5-dev libfftw3-dev libpulse-dev
+</pre><p>
+Then download
+<a href=http://www.cantab.net/users/john.wiseman/Downloads/Beta/QtSMSource.zip
+>http://www.cantab.net/users/john.wiseman/Downloads/Beta/QtSMSource.zip</a>, unzip and run qmake then make
+
+<br><br>
+QtSoundModem keeps it's configuration information in a .ini file, which is saved in the directory QtSoundModem is started from. <br><br>
+<h2>Differences from original SoundModem.</h2>
+<h3>General</h3><p>
+QtSM is generally compatible with Soundmodem V 1.08, including FX.25 features. All modem types except BFSK FEC 4x100 are supported.
+<br><br>The Filter parameters are not configurable.
+<h3>Sound Card Handling</h3><p>
+Sample Rate is fixed at 12000
+<br><br>
+When running two channels the original SoundModem uses the left audio for the first and right for the second. Mine allows either channel to be allocated to either side. As a lot of radio interfaces are actually mono this makes little difference but does mean if you can access the two sides separately you could run QtSoundModem on one and another mode on the other. If you have both channels running on the same side you only get one waterfall.
+<br><br>
+
+<h3>PTT</h3><p>
+As well as the normal RTS/DTR on a COM port QTSM supports:
+<br><br>Using PTT pins on sound card interfaces based on the CM108 or CM119 Chips
+<br>Using GPIO pin(s) on platforms like the Raspberry Pi.
+<br>CAT Commands. You need to specify (in hex) the strings to be sent to the radio for PTT on and off.
+<br>HAMLIB (rigctld)
+
+
+<h3>Running without the GUI</h3><p>
+QtSM can run without the graphics display. Start with command line parameter nogui.
+<br><br>
+This works on both Windows and Linux, but on Windows the only way to close the program is to kill it using Task Manager.
+<br><br>
+It is possible to configure the program by editing the QtSoundModem.ini, but that is far from easy, so it is better if you can run the program in gui mode first, configure, then restart in nogui mode.
+<br><br>
+ 
+
+
+<br><br><br>
+John Wiseman G8BPQ
+<br>
+April 2020<br>
+</body>Updated April 2022
+</html>
+
